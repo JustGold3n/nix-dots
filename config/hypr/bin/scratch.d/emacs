@@ -1,3 +1,0 @@
-#!/usr/bin/env zsh
-
-emacs --eval '(doom-big-font-mode +1)'
