@@ -1,0 +1,22 @@
+:root {
+<* for name, value in colors *>
+    --{{name}}: {{value.default.hex}};
+<* endfor *>
+
+<* for name, value in colors *>
+    --{{name}}_rgb: {{value.default.red}} {{value.default.green}} {{value.default.blue}};
+<* endfor *>
+}
+
+/* TODO: Apply theme colors */
+
+
+/*** Hiding unwanted GUI elements ***/
+/* Hide minimize, maximize, and close window buttons; I use shortcut keys instead */
+#nav-bar .titlebar-buttonbox-container { display: none !important; }
+/* Hide extra space left over on either side of the tabbar */
+#TabsToolbar .titlebar-spacer[type="pre-tabs"], #TabsToolbar .titlebar-spacer[type="post-tabs"] { display: none !important; }
+/* Hide useless header in the sidebar */
+#sidebar-panel-header, .sidebar-panel-heading { display: none !important; }
+/* Hide the mute and close tab buttons. I keep my tabs on the left; it's too easy to fat finger these. */
+.tab-close-button, .tab-icon-overlay:not([sharing], [crashed]):is([soundplaying], [muted]) { display: none !important; }

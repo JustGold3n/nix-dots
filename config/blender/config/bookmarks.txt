@@ -1,0 +1,12 @@
+[Bookmarks]
+/home/gold3n/projects/assets/
+/home/gold3n/projects/
+!projects/3d
+/home/gold3n/projects/oneshot/3d/
+[Recent]
+/home/gold3n/downloads/
+/home/gold3n/Downloads/
+/home/gold3n/projects/oneshot/3d/1903-111/
+/home/gold3n/projects/assets/models/
+/home/gold3n/projects/oneshot/3d/elizabeth111/
+/home/gold3n/projects/assets/
