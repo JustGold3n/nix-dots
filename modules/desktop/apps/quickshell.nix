@@ -1,7 +1,12 @@
-{ config, options, lib, pkgs, ... }:
-
-with lib;
-let
+{
+  hey,
+  config,
+  options,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
   cfg = config.modules.desktop.apps.quickshell;
 in {
   options.modules.desktop.apps.quickshell = {
@@ -20,26 +25,24 @@ in {
       pamixer
       networkmanager
       bluez
-      bluez-utils
       cliphist
       wl-clipboard
       imagemagick
       jq
       dotool
-      kde-cli-tools
-      
+
       # Fonts & Themes
       inter
-      papirus-icon-theme
-      bibata-cursor-theme
-      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+      #      papirus-icon-theme
+      #bibata-cursor-theme
+      #(nerdfonts.override {fonts = ["JetBrainsMono"];})
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
     ];
 
     home.configFile."quickshell" = {
-      source = ../../../config/quickshell;
+      source = "${hey.configDir}/quickshell";
       recursive = true;
     };
   };
