@@ -80,7 +80,7 @@ with builtins; {
       git.enable = true;
       gnupg.enable = true;
       tmux.enable = true;
-      zsh.enable = true;
+      fish.enable = true;
     };
     services = {
       ssh.enable = true;
@@ -95,11 +95,12 @@ with builtins; {
 
   ## Local config
   config = {...}: {
+    networking.networkmanager.enable = true;
   };
 
   ## Hardware config
   hardware = {pkgs, ...}: {
-    networking.wireless.interfaces = ["wlan0"];
+   # networking.wireless.interfaces = ["wlan0"];
 
 #enableRedistributableFirmware = true;
 #wirelessRegulatoryDatabase = true;       
@@ -111,7 +112,6 @@ with builtins; {
 #      };
     };
 
-    #networking.networkmanager.enable = true;
     # tlp is enabled by nixos-hardware.dell-xps-13-9370 ???
     services.tlp.settings = {
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";

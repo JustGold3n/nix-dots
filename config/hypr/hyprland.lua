@@ -1,4 +1,5 @@
 require("modules.env")
+require("hyprland_colors")
 require("modules.monitors")
 require("modules.input")
 require("modules.decoration")
