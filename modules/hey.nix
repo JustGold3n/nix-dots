@@ -66,11 +66,10 @@ in {
 
       export JANET_PATH="${janetTreeDir}/lib"
       export JANET_TREE="${janetTreeDir}"
-
-      # Appending `|| true` prevents the system switch from failing if info.json is absent
-      ${pkgs.zsh}/bin/zsh -c "cd '${hey.dir}'; jpm deps" || true
-      ${pkgs.zsh}/bin/zsh -c "cd '${hey.dir}'; jpm run deploy" || true
+      ${pkgs.zsh}/bin/zsh -c "cd '${hey.dir}'; jpm deps"
+      ${pkgs.zsh}/bin/zsh -c "cd '${hey.dir}'; jpm run deploy"
     '';
+
     programs.zsh.shellInit = mkBefore ''
       export DOTFILES_HOME="${hey.dir}"
       export fpath=( "${hey.libDir}/zsh" "''${fpath[@]}" )

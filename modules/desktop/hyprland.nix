@@ -111,12 +111,10 @@ in {
         [config]
         version_check = false
         import_json_files = ["${config.home.dataDir}/hey/info.json"]
-
         [templates.hyprland]
         input_path = "${hey.configDir}/matugen/templates/hyprland.lua"
-        output_path = "${config.home.configDir}/hypr/hyprland.colors.lua"
-
-        ${optionalString config.modules.shell.tmux.enable ''
+        output_path = "${config.home.configDir}/hypr/hyprland_colors.lua"
+                ${optionalString config.modules.shell.tmux.enable ''
           [templates.tmux]
           input_path = "${hey.configDir}/matugen/templates/tmux.conf"
           output_path = "${config.home.configDir}/tmux/dank-colors.conf"
