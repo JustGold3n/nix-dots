@@ -50,13 +50,13 @@ with builtins; {
 
       apps.rofi.enable = true;
       apps.quickshell.enable = true;
-      term.default = "foot";
+      term.default = "ghostty";
       term.foot.enable = true;
 
 
-      browsers.default = "librewolf";
+      #browsers.default = "librewolf";
       browsers.librewolf.enable = true;
-      #browsers.default = "zen-browser";
+      browsers.default = "zen";
       #     browsers.zen-browser.enable = true;
       media.cad.enable = true;
       # media.daw.enable = true;

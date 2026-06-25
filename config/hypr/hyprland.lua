@@ -1,5 +1,5 @@
 require("modules.env")
-require("hyprland_colors")
+--require("hyprland_colors")
 require("modules.monitors")
 require("modules.input")
 require("modules.decoration")
@@ -9,7 +9,7 @@ require("rishot")
 require("modules.window_rules")
 require("modules.autostart")
 
-pcall(require, "modules.private")
+--pcall(require, "modules.private")
 
 -- GhostType hotkey (managed by the app)
-pcall(require, "ghosttype")
+--pcall(require, "ghosttype")
