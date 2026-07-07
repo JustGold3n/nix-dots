@@ -20,7 +20,7 @@ in {
     profileName = mkOpt str config.user.name;
 
     settings = mkOpt' (attrsOf (oneOf [bool int str])) {} ''
-      Librewolf preferences to set in <filename>user.js</filename>
+      Zen preferences to set in <filename>user.js</filename>
     '';
     extraConfig = mkOpt' lines "" ''
       Extra lines to add to <filename>user.js</filename>
