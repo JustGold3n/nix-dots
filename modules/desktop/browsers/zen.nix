@@ -46,7 +46,7 @@ in {
 
     programs.firefox = {
       enable = true;
-      package = pkgs.zen;
+      package = pkgs.zen-browser;
       policies = {
         DontCheckDefaultBrowser = true;
         DisablePocket = true;

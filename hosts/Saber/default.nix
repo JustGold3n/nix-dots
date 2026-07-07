@@ -57,7 +57,7 @@ with builtins; {
       #browsers.default = "librewolf";
       browsers.librewolf.enable = true;
       browsers.default = "zen";
-      #     browsers.zen-browser.enable = true;
+      browsers.zen.enable = true;
       media.cad.enable = true;
       # media.daw.enable = true;
       media.graphics.enable = true;

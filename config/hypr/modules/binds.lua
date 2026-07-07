@@ -1,10 +1,10 @@
 local mod = "SUPER"
 
-hl.bind(mod .. " + W",         hl.dsp.window.kill())
+hl.bind(mod .. " + Q",         hl.dsp.window.kill())
 hl.bind("CTRL + SHIFT + W",    hl.dsp.window.close())
-hl.bind(mod .. " + Return",    hl.dsp.exec_cmd("ghostty"))
+hl.bind(mod .. " + Return",    hl.dsp.exec_cmd("foot"))
 hl.bind(mod .. " + F",         hl.dsp.window.fullscreen())
-hl.bind(mod .. " + E",         hl.dsp.exec_cmd("dolphin"))
+--hl.bind(mod .. " + E",         hl.dsp.exec_cmd("dolphin"))
 hl.bind(mod .. " + T",         hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mod .. " + M",         hl.dsp.window.move({ workspace = "special:minimized", follow = false }))
 
@@ -16,16 +16,17 @@ hl.bind(mod .. " + Right",      hl.dsp.focus({ workspace = "r+1" }))
 hl.bind(mod .. " + mouse_up",   hl.dsp.focus({ workspace = "r-1" }))
 hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "r+1" }))
 
+p
 hl.bind(mod .. " + SHIFT + C",  hl.dsp.exec_cmd("hyprpicker -a"))
 
-hl.bind(mod .. " + Space",      hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/open-surface.sh launcher"))
+hl.bind(mod .. " + SPACE",      hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/open-surface.sh launcher"))
 hl.bind(mod .. " + V",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/open-surface.sh clipboard"))
 
 hl.bind(mod .. " + L",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/lock.sh"))
 
 hl.bind(mod .. " + B",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/wallpaper.sh"))
 hl.bind(mod .. " + C",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/open-surface.sh wallpaper"))
-hl.bind(mod .. " + D",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/record.sh"))
+hl.bind(mod .. " + R",          hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/record.sh"))
 
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })

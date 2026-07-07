@@ -25,6 +25,7 @@
       emacs-overlay.url = "github:nix-community/emacs-overlay";
       emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
       nixos-hardware.url = "github:nixos/nixos-hardware";
+      zen-browser.url = "github:0xc000022070/zen-browser-flake";
     };
 
   outputs = inputs @ { self, nixpkgs, nixos-hardware, ... }:
