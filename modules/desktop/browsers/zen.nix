@@ -1,10 +1,15 @@
 {
-  inputs,
   pkgs,
   lib,
+  config,
+  hey,
   ...
 }:
+with lib;
+with hey.lib;
 let
+  cfg = config.modules.desktop.browsers.zen;
+
   extension = shortId: guid: {
     name = guid;
     value = {
@@ -27,54 +32,41 @@ let
     (extension "ublock-origin" "uBlock0@raymondhill.net")
     # ...
   ];
-
 in
 {
-  environment.systemPackages = [
-    (pkgs.wrapFirefox
-      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser-unwrapped
-      {
-        extraPrefs = lib.concatLines (
-          lib.mapAttrsToList (
-            name: value: ''lockPref(${lib.strings.toJSON name}, ${lib.strings.toJSON value});''
-          ) prefs
-        );
+  options.modules.desktop.browsers.zen = {
+    enable = mkBoolOpt false;
+  };
 
-        extraPolicies = {
-          DisableTelemetry = true;
-          ExtensionSettings = builtins.listToAttrs extensions;
+  config = mkIf cfg.enable {
+    environment.systemPackages = [
+      (pkgs.wrapFirefox
+        hey.inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser-unwrapped
+        {
+          extraPrefs = lib.concatLines (
+            lib.mapAttrsToList (
+              name: value: ''lockPref(${lib.strings.toJSON name}, ${lib.strings.toJSON value});''
+            ) prefs
+          );
 
-          SearchEngines = {
-            Default = "ddg";
-            Add = [
-              {
-                Name = "nixpkgs packages";
-                URLTemplate = "https://search.nixos.org/packages?query={searchTerms}";
-                IconURL = "https://wiki.nixos.org/favicon.ico";
-                Alias = "@np";
-              }
-              {
-                Name = "NixOS options";
-                URLTemplate = "https://search.nixos.org/options?query={searchTerms}";
-                IconURL = "https://wiki.nixos.org/favicon.ico";
-                Alias = "@no";
-              }
-              {
-                Name = "NixOS Wiki";
-                URLTemplate = "https://wiki.nixos.org/w/index.php?search={searchTerms}";
-                IconURL = "https://wiki.nixos.org/favicon.ico";
-                Alias = "@nw";
-              }
-              {
-                Name = "noogle";
-                URLTemplate = "https://noogle.dev/q?term={searchTerms}";
-                IconURL = "https://noogle.dev/favicon.ico";
-                Alias = "@ng";
-              }
-            ];
+          extraPolicies = {
+            DisableTelemetry = true;
+            ExtensionSettings = builtins.listToAttrs extensions;
+
+            SearchEngines = {
+              Default = "ddg";
+              Add = [
+                {
+                  Name = "nixpkgs packages";
+                  URLTemplate = "https://search.nixos.org/packages?query={searchTerms}";
+                  IconURL = "https://wiki.nixos.org/favicon.ico";
+                  Alias = "@np";
+                }
+              ];
+            };
           };
-        };
-      }
-    )
-  ];
+        }
+      )
+    ];
+  };
 }

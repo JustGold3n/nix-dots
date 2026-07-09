@@ -7,8 +7,8 @@ local function border(hex, fallback)
     return "rgb(" .. hex:gsub("#", "") .. ")"
 end
 
-local active   = border(wc and wc.active, "#e0563b")
-local inactive = border(wc and wc.inactive, "#313a4d")
+local active   = border(wc and wc.active, "#f9f9f9")
+local inactive = border(wc and wc.inactive, "#838383")
 
 hl.config({
     general = {
@@ -29,7 +29,9 @@ hl.config({
             enabled      = true,
             range        = 12,
             render_power = 3,
-            color        = 0xaa14110f,
+            color        = 0xaa2b2b2b,
+	    --color        = 0xaa14110f,
+
         },
         blur = {
             enabled           = true,

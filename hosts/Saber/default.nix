@@ -54,10 +54,10 @@ with builtins; {
       term.foot.enable = true;
 
 
-      browsers.default = "librewolf";
-      browsers.librewolf.enable = true;
-      #browsers.default = "zen-browser";
-      #browsers.zen.enable = true;
+      #browsers.default = "librewolf";
+      #browsers.librewolf.enable = true;
+      browsers.default = "zen-browser";
+      browsers.zen.enable = true;
       media.cad.enable = true;
       # media.daw.enable = true;
       media.graphics.enable = true;
