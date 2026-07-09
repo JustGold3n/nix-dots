@@ -1,17 +1,29 @@
-{ config, pkgs, ... }:
+{ hey, lib, config, pkgs, ... }:
 
-{
-  programs.niri.enable = true;
-  programs.xwayland.enable = true;
+with lib;
+with hey.lib;
+let
+  cfg = config.modules.desktop.niri;
+in {
+  options.modules.desktop.niri = {
+    enable = mkBoolOpt false;
+  };
 
-  home.packages = with pkgs; [
-    xwayland-satellite 
-    jq
-  ];
+  config = mkIf cfg.enable {
+    programs.niri.enable = true;
+    programs.xwayland.enable = true;
 
-    home.file.".config/niri/config.kdl".source = ../../config/niri/config.kdl;
-    home.file.".config/niri/scripts" = {
-    source = ../../config/niri/scripts;
-    recursive = true;
-    executable = true;  
+    user.packages = with pkgs; [
+      xwayland-satellite
+      jq
+    ];
+
+    home.configFile = {
+      "niri/config.kdl".source = ../../config/niri/config.kdl;
+      "niri/scripts" = {
+        source = ../../config/niri/scripts;
+        recursive = true;
+      };
+    };
+  };
 }

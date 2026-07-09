@@ -5,7 +5,8 @@
   ...
 }:
 with lib;
-with builtins; {
+with builtins;
+{
   system = "x86_64-linux";
 
   imports = [
@@ -15,6 +16,7 @@ with builtins; {
   ## Flake modules
   modules = {
     xdg.ssh.enable = true;
+
     profiles = {
       role = "workstation";
       user = "gold3n";
@@ -29,67 +31,46 @@ with builtins; {
     };
 
     desktop = {
-      hyprland = rec {
-        enable = true;
-        monitors = [
-          {
-            output = "eDP-1";
-            primary = true;
-          }
-        ];
-        extraConfig = ''
-          workspace=special:term,gapsin:3,gapsout:100,on-created-empty:hey .scratch term
-          workspace=special:pad,gapsin:3,gapsout:40 80 40 80
-
-          # trigger when the lid is up
-          bindl=, switch:off:Lid Switch, exec, hyprctl dispatch dpms on
-          # trigger when the lid is down
-          bindl=, switch:on:Lid Switch, exec, hyprctl dispatch dpms off && hey .lock --no-fade-in --no-fade-out
-        '';
-      };
+      niri.enable = true;
 
       apps.rofi.enable = true;
       apps.quickshell.enable = true;
-      term.default = "ghostty";
+      term.default = "foot";
       term.foot.enable = true;
-
-
-      #browsers.default = "librewolf";
-      #browsers.librewolf.enable = true;
       browsers.default = "zen-browser";
       browsers.zen.enable = true;
       media.cad.enable = true;
-      # media.daw.enable = true;
       media.graphics.enable = true;
       media.music.enable = true;
       media.video.enable = true;
-      # media.video.capture.enable = true;
-      # media.pdf.enable = true;
     };
+
     dev = {
       cc.enable = true;
     };
+
     editors = {
       default = "nvim";
-#      emacs.enable = true;
       vim.enable = true;
     };
+
     shell = {
-      # vaultwarden.enable = true;
       direnv.enable = true;
       git.enable = true;
       gnupg.enable = true;
       tmux.enable = true;
       fish.enable = true;
     };
+
     services = {
       ssh.enable = true;
-#      flatpak.enable = true;
     };
+
     system = {
       utils.enable = true;
       fs.enable = true;
     };
+
     virt.qemu.enable = true;
   };
 
@@ -100,32 +81,20 @@ with builtins; {
 
   ## Hardware config
   hardware = {pkgs, ...}: {
-   # networking.wireless.interfaces = ["wlan0"];
-
-#enableRedistributableFirmware = true;
-#wirelessRegulatoryDatabase = true;       
-	boot.initrd = {
+    boot.initrd = {
       kernelModules = ["dm-snapshot"];
-#      luks.devices.home = {
-#        device = "/dev/nvme0n1p8";
-#        allowDiscards = true;
-#      };
     };
 
-    # tlp is enabled by nixos-hardware.dell-xps-13-9370 ???
     services.tlp.settings = {
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
       CPU_SCALING_GOVERNOR_ON_AC = "ondemand";
       CPU_MAX_PERF_ON_AC = 100;
       CPU_MAX_PERF_ON_BAT = 50;
 
-      # My laptop is always plugged in wherever I'm willing to use it, so I'll
-      # value battery lifespan over runtime. Run `tlp fullcharge` to temporarily
-      # force full charge.
-      # @see https://linrunner.de/tlp/faq/battery.html#how-to-choose-good-battery-charge-thresholds
       START_CHARGE_THRESH_BAT0 = 40;
       STOP_CHARGE_THRESH_BAT0 = 50;
     };
+
     fileSystems."/" = {
       device = "/dev/disk/by-uuid/c5d83563-9481-4f7f-85c1-92fc9ad436fa";
       fsType = "ext4";
