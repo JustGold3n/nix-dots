@@ -1,50 +1,33 @@
-# modules/themes/autumnal/default.nix --- a dark, pastel theme
+{ pkgs, ... }:
 
-{ hey, heyBin, lib, config, pkgs, ... } @ args:
-
-with lib;
-with hey.lib;
-let cfg = config.modules.theme;
-in mkIf (cfg.active == "autumnal") (mkMerge [
-  {
-
-    modules = {
-      # shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
-      # shell.tmux.rcFiles = [ ./config/tmux.conf ];
-      # desktop.browsers = {
-      #   librewolf = {
-      #     settings."devtools.theme" = "dark";
-      #     userChrome = concatMapStringsSep "\n" readFile [
-      #       ./config/librewolf/userChrome.css
-      #     ];
-      #   };
-      # };
+{
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
     };
-  }
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
+  };
 
-  # (mkIf config.modules.desktop.enable {
-  #   home.configFile = with config.modules; mkMerge [
-  #     {
-  #       "Kvantum/kvantum.kvconfig".source = (pkgs.formats.ini {}).generate "kvantum.kvconfig" {
-  #         General.theme = "Catppuccin-Mocha-Mauve";
-  #       };
-  #     }
-  #     (mkIf desktop.media.graphics.vector.enable {
-  #       "inkscape/templates/default.svg".source = ./config/inkscape/default-template.svg;
-  #     })
-  #     (mkIf desktop.apps.rofi.enable {
-  #       "rofi/config.theme.rasi".source = ./config/rofi/config.rasi;
-  #       "rofi/themes" = {
-  #         source = ./config/rofi/themes;
-  #         recursive = true;
-  #       };
-  #       "rofi/icons" = {
-  #         source = ./config/rofi/icons;
-  #         recursive = true;
-  #       };
-  #     })
-  #   ];
-  # })
+  qt = {
+    enable = true;
+    platformTheme.name = "adwaita";
+    style.name = "adwaita-dark";
+  };
 
-  # (mkIf config.modules.desktop.hyprland.enable (import ./hyprland.nix args))
-])
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      gtk-theme = "Adwaita-dark";
+    };
+  };
+
+  home.packages = with pkgs; [
+    adwaita-qt
+    adwaita-qt6
+  ];
+}# modules/themes/autumnal/default.nix --- a dark, pastel theme

@@ -1,0 +1,60 @@
+input {
+    keyboard {
+        xkb {
+            layout "us, cz"
+	    variant " ,qwerty"
+        }
+    }
+    touchpad {
+        tap
+        natural-scroll
+    }
+}
+
+output "eDP-1" {
+    scale 1.0
+}
+
+layout {
+    gaps 16
+    struts {
+        left 0
+        right 0
+        top 0
+        bottom 0
+    }
+    default-column-width { proportion 0.5; }
+    focus-ring {
+        width 2
+        active-color "#7fc8ff"
+        inactive-color "#505050"
+    }
+}
+
+// Background processes and UI Daemons
+spawn-at-startup "~/.config/niri/scripts/watchdog.sh" "quickshell"
+spawn-at-startup "~/.config/niri/scripts/launcher-daemon.sh"
+spawn-at-startup "~/.config/niri/scripts/sidebar-daemon.sh"
+spawn-at-startup "~/.config/niri/scripts/topbar-daemon.sh"
+spawn-at-startup "~/.config/niri/scripts/wallpaper.sh" "init"
+
+binds {
+    Mod+Return { spawn "foot"; }
+    Mod+D { spawn "rofi" "-show" "drun"; }
+    Mod+Q { close-window; }
+    
+    // Window Management
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+    Mod+Right { focus-column-right; }
+    Mod+Shift+Left  { move-column-left; }
+    Mod+Shift+Right { move-column-right; }
+
+    // Converted Script Execution Binds
+    Mod+Shift+W { spawn "~/.config/niri/scripts/wallpaper.sh"; }
+    Mod+B       { spawn "~/.config/niri/scripts/sidebar.sh"; }
+    
+    // Example usage for open-surface.sh
+    Mod+O       { spawn "~/.config/niri/scripts/open-surface.sh" "example_surface"; }
+}
