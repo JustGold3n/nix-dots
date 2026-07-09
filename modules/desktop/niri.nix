@@ -18,10 +18,10 @@ in {
       jq
     ];
 
+    # Use the repository's native config variable and map the entire directory recursively
     home.configFile = {
-      "niri/config.kdl".source = ../../config/niri/config.kdl;
-      "niri/scripts" = {
-        source = ../../config/niri/scripts;
+      "niri" = {
+        source = "${hey.configDir}/niri";
         recursive = true;
       };
     };
