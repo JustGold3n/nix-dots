@@ -11,7 +11,7 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       # Forcefully disable the default SSH agent to allow GCR SSH Agent to handle it
-      programs.ssh.startAgent = lib.mkForce false;
+      programs.ssh.startAgent = lib.mkForce true;
 
       services.openssh = {
         enable = true;

@@ -29,8 +29,8 @@ function available-host {
 }
 
 
-if [[ "$(whoami)" != gold3n ]]; then
-  hey.error "Must be gold3n!"
+if [[ "$(whoami)" != hlissner ]]; then
+  hey.error "Must be hlissner!"
   exit 1
 fi
 
@@ -38,7 +38,7 @@ set -e
 local host=$(hostname)
 case $host in
   udon)
-    hey.do rcpd ~/projects/ /media/backup/nas0/gold3n/projects/
+    hey.do rcpd ~/projects/ /media/backup/nas0/hlissner/projects/
 
     if available-host ramen.lan; then
       hey.do rcpd ~/projects/ ramen.lan:~/projects/
@@ -50,14 +50,14 @@ case $host in
       hey.do rcpd ~/projects/ nas0.lan:~/files/projects/
       # Update local backups
       hey.do rcpd nas0.lan:/mnt/nas/backup/files/ /media/backup/nas0/apps/
-      hey.do rcpd nas0.lan:~/files/ /media/backup/nas0/gold3n/
+      hey.do rcpd nas0.lan:~/files/ /media/backup/nas0/hlissner/
     else
       hey.error "Couldn't connect to nas0.lan"
     fi
 
     if available-host soba.lan; then
       if ssh soba.lan test -s ~/Media/external; then
-        hey.do rcpd /media/backup/nas0/gold3n/ soba.lan:~/Media/external
+        hey.do rcpd /media/backup/nas0/hlissner/ soba.lan:~/Media/external
       fi
     else
       hey.error "Couldn't connect to soba.lan"
@@ -96,7 +96,7 @@ case $host in
       for category in audiobooks books anime documentaries movies tv; do
         rcp "root@nas0.lan:/mnt/nas/media/$category/" "$HOME/jellyfin/$category/"
       done
-      ssh root@nas0.lan "rsync -azPJ /mnt/nas/media/music/ /mnt/nas/users/gold3n/files/music/unsorted/"
+      ssh root@nas0.lan "rsync -azPJ /mnt/nas/media/music/ /mnt/nas/users/hlissner/files/music/unsorted/"
     else
       hey.error "Couldn't connect to nas0.lan"
     fi

@@ -1,304 +1,298 @@
-# This is the sample configuration for nvf, aiming to give you a feel of the default options
-# while certain plugins are enabled. While it may partially act as one, this is *not* quite
-# an overview of nvf's module options. To find a complete and curated list of nvf module
-# options, examples, instruction tutorials and more; please visit the online manual.
-# https://notashelf.github.io/nvf/options.html
-isMaximal: {
-  config.vim = {
-    viAlias = true;
-    vimAlias = true;
-    debugMode = {
-      enable = false;
-      level = 16;
-      logFile = "/tmp/nvim.log";
-    };
+{ hey, lib, config, pkgs, ... }:
 
-    # vim.opts and vim.options are aliased
-    opts.expandtab = true;
+with lib;
+with hey.lib;
+let 
+  cfg = config.modules.editors.nvf;
+  isMaximal = true; # Set to false for a more minimal initial configuration
+in {
+  # Import the nvf NixOS module from the flake inputs
+  imports = [
+    hey.inputs.nvf.nixosModules.default
+  ];
 
-    spellcheck = {
+  options.modules.editors.nvf = {
+    enable = mkBoolOpt false;
+  };
+
+  config = mkIf cfg.enable {
+    programs.nvf = {
       enable = true;
-      programmingWordlist.enable = isMaximal;
-    };
+      settings.vim = {
+        viAlias = true;
+        vimAlias = true;
+        debugMode = {
+          enable = false;
+          level = 16;
+          logFile = "/tmp/nvim.log";
+        };        # vim.opts and vim.options are aliased
+        opts.expandtab = true;
 
-    lsp = {
-      # This must be enabled for the language modules to hook into
-      # the LSP API.
-      enable = true;
+        spellcheck = {
+          enable = true;
+          programmingWordlist.enable = isMaximal;
+        };
 
-      formatOnSave = true;
-      lspkind.enable = false;
-      lightbulb.enable = true;
-      lspsaga.enable = false;
-      trouble.enable = true;
-      lspSignature.enable = !isMaximal; # conflicts with blink in maximal
-      otter-nvim.enable = isMaximal;
-      nvim-docs-view.enable = isMaximal;
-      presets.harper.enable = isMaximal;
-    };
+        lsp = {
+          enable = true;
+          formatOnSave = true;
+          lspkind.enable = false;
+          lightbulb.enable = true;
+          lspsaga.enable = false;
+          trouble.enable = true;
+          lspSignature.enable = !isMaximal;
+          otter-nvim.enable = isMaximal;
+          nvim-docs-view.enable = isMaximal;
+          presets.harper.enable = isMaximal;
+        };
 
-    debugger = {
-      nvim-dap = {
-        enable = true;
-        ui.enable = true;
-      };
-    };
+        debugger = {
+          nvim-dap = {
+            enable = true;
+            ui.enable = true;
+          };
+        };
 
-    # This section does not include a comprehensive list of available language modules.
-    # To list all available language module options, please visit the nvf manual.
-    languages = {
-      enableFormat = true;
-      enableTreesitter = true;
-      enableExtraDiagnostics = true;
+        languages = {
+          enableFormat = true;
+          enableTreesitter = true;
+          enableExtraDiagnostics = true;
 
-      # Languages that will be supported in default and maximal configurations.
-      nix.enable = true;
-      markdown.enable = true;
+          nix.enable = true;
+          markdown.enable = true;
 
-      # Languages that are enabled in the maximal configuration.
-      bash.enable = isMaximal;
-      clang.enable = isMaximal;
-      cmake.enable = isMaximal;
-      css.enable = isMaximal;
-      scss.enable = isMaximal;
-      html.enable = isMaximal;
-      json.enable = isMaximal;
-      sql.enable = isMaximal;
-      java.enable = isMaximal;
-      kotlin.enable = isMaximal;
-      typescript.enable = isMaximal;
-      go.enable = isMaximal;
-      lua.enable = isMaximal;
-      zig.enable = isMaximal;
-      python.enable = isMaximal;
-      typst.enable = isMaximal;
-      rust = {
-        enable = isMaximal;
-        extensions.crates-nvim.enable = isMaximal;
-      };
-      toml.enable = isMaximal;
-      xml.enable = isMaximal;
-      tex.enable = isMaximal;
-      docker.enable = isMaximal;
-      env.enable = isMaximal;
+          bash.enable = isMaximal;
+          clang.enable = isMaximal;
+          cmake.enable = isMaximal;
+          css.enable = isMaximal;
+          scss.enable = isMaximal;
+          html.enable = isMaximal;
+          json.enable = isMaximal;
+          sql.enable = isMaximal;
+          java.enable = isMaximal;
+          kotlin.enable = isMaximal;
+          typescript.enable = isMaximal;
+          go.enable = isMaximal;
+          lua.enable = isMaximal;
+          zig.enable = isMaximal;
+          python.enable = isMaximal;
+          typst.enable = isMaximal;
+          rust = {
+            enable = isMaximal;
+            extensions.crates-nvim.enable = isMaximal;
+          };
+          toml.enable = isMaximal;
+          xml.enable = isMaximal;
+          tex.enable = isMaximal;
+          docker.enable = isMaximal;
+          env.enable = isMaximal;
 
-      # Language modules that are not as common.
-      openscad.enable = false;
-      arduino.enable = false;
-      assembly.enable = false;
-      astro.enable = false;
-      nu.enable = false;
-      csharp.enable = false;
-      julia.enable = false;
-      vala.enable = false;
-      scala.enable = false;
-      r.enable = false;
-      gleam.enable = false;
-      glsl.enable = false;
-      dart.enable = false;
-      ocaml.enable = false;
-      elixir.enable = false;
-      haskell.enable = false;
-      hcl.enable = false;
-      ruby.enable = false;
-      fsharp.enable = false;
-      just.enable = false;
-      make.enable = false;
-      qml.enable = false;
-      jinja.enable = false;
-      svelte.enable = false;
-      vue.enable = false;
-      tsx.enable = false;
-      liquid.enable = false;
-      tera.enable = false;
-      twig.enable = false;
-      gettext.enable = false;
-      fluent.enable = false;
-      jq.enable = false;
-      fish.enable = false;
-      standard-ml.enable = false;
-      pug.enable = false;
+          openscad.enable = false;
+          arduino.enable = false;
+          assembly.enable = false;
+          astro.enable = false;
+          nu.enable = false;
+          csharp.enable = false;
+          julia.enable = false;
+          vala.enable = false;
+          scala.enable = false;
+          r.enable = false;
+          gleam.enable = false;
+          glsl.enable = false;
+          dart.enable = false;
+          ocaml.enable = false;
+          elixir.enable = false;
+          haskell.enable = false;
+          hcl.enable = false;
+          ruby.enable = false;
+          fsharp.enable = false;
+          just.enable = false;
+          make.enable = false;
+          qml.enable = false;
+          jinja.enable = false;
+          svelte.enable = false;
+          vue.enable = false;
+          tsx.enable = false;
+          liquid.enable = false;
+          tera.enable = false;
+          twig.enable = false;
+          gettext.enable = false;
+          fluent.enable = false;
+          jq.enable = false;
+          fish.enable = false;
+          standard-ml.enable = false;
+          pug.enable = false;
 
-      # Nim LSP is broken on Darwin and therefore
-      # should be disabled by default. Users may still enable
-      # `vim.languages.nim` to enable it, this does not restrict
-      # that.
-      # See: <https://github.com/PMunch/nimlsp/issues/178#issue-2128106096>
-      nim.enable = false;
-    };
+          nim.enable = false;
+        };
 
-    visuals = {
-      nvim-scrollbar.enable = isMaximal;
-      nvim-web-devicons.enable = true;
-      nvim-cursorline.enable = true;
-      cinnamon-nvim.enable = true;
-      fidget-nvim.enable = true;
+        visuals = {
+          nvim-scrollbar.enable = isMaximal;
+          nvim-web-devicons.enable = true;
+          nvim-cursorline.enable = true;
+          cinnamon-nvim.enable = true;
+          fidget-nvim.enable = true;
+          highlight-undo.enable = true;
+          blink-indent.enable = true;
+          indent-blankline.enable = true;
+          cellular-automaton.enable = false;
+        };
 
-      highlight-undo.enable = true;
-      blink-indent.enable = true;
-      indent-blankline.enable = true;
+        statusline = {
+          lualine = {
+            enable = true;
+            theme = "catppuccin";
+          };
+        };
 
-      # Fun
-      cellular-automaton.enable = false;
-    };
+        theme = {
+          enable = true;
+          name = "catppuccin";
+          style = "mocha";
+          transparent = false;
+        };
 
-    statusline = {
-      lualine = {
-        enable = true;
-        theme = "catppuccin";
-      };
-    };
+        autopairs.nvim-autopairs.enable = true;
 
-    theme = {
-      enable = true;
-      name = "catppuccin";
-      style = "mocha";
-      transparent = false;
-    };
+        autocomplete = {
+          nvim-cmp.enable = !isMaximal;
+          blink-cmp.enable = isMaximal;
+        };
 
-    autopairs.nvim-autopairs.enable = true;
+        snippets.luasnip.enable = true;
 
-    # nvf provides various autocomplete options. The tried and tested nvim-cmp
-    # is enabled in default package, because it does not trigger a build. We
-    # enable blink-cmp in maximal because it needs to build its rust fuzzy
-    # matcher library.
-    autocomplete = {
-      nvim-cmp.enable = !isMaximal;
-      blink-cmp.enable = isMaximal;
-    };
+        filetree = {
+          neo-tree.enable = true;
+        };
 
-    snippets.luasnip.enable = true;
+        tabline = {
+          nvimBufferline.enable = true;
+        };
 
-    filetree = {
-      neo-tree = {
-        enable = true;
-      };
-    };
+        treesitter.context.enable = true;
 
-    tabline = {
-      nvimBufferline.enable = true;
-    };
+        binds = {
+          whichKey.enable = true;
+          cheatsheet.enable = true;
+        };
 
-    treesitter.context.enable = true;
+        telescope.enable = true;
 
-    binds = {
-      whichKey.enable = true;
-      cheatsheet.enable = true;
-    };
+        git = {
+          enable = true;
+          gitsigns.enable = true;
+          gitsigns.codeActions.enable = false;
+          neogit.enable = isMaximal;
+        };
 
-    telescope.enable = true;
+        minimap = {
+          minimap-vim.enable = false;
+          codewindow.enable = isMaximal;
+        };
 
-    git = {
-      enable = true;
-      gitsigns.enable = true;
-      gitsigns.codeActions.enable = false; # throws an annoying debug message
-      neogit.enable = isMaximal;
-    };
+        dashboard = {
+          dashboard-nvim.enable = false;
+          alpha.enable = isMaximal;
+        };
 
-    minimap = {
-      minimap-vim.enable = false;
-      codewindow.enable = isMaximal; # lighter, faster, and uses lua for configuration
-    };
+        notify = {
+          nvim-notify.enable = true;
+        };
 
-    dashboard = {
-      dashboard-nvim.enable = false;
-      alpha.enable = isMaximal;
-    };
+        projects = {
+          project-nvim.enable = isMaximal;
+        };
 
-    notify = {
-      nvim-notify.enable = true;
-    };
+        utility = {
+          ccc.enable = false;
+          vim-wakatime.enable = false;
+          diffview-nvim.enable = true;
+          yanky-nvim.enable = false;
+          qmk-nvim.enable = false;
+          icon-picker.enable = isMaximal;
+          surround.enable = isMaximal;
+          leetcode-nvim.enable = isMaximal;
+          multicursors.enable = isMaximal;
+          smart-splits.enable = isMaximal;
+          undotree.enable = isMaximal;
+          nvim-biscuits.enable = isMaximal;
+          grug-far-nvim.enable = isMaximal;
 
-    projects = {
-      project-nvim.enable = isMaximal;
-    };
+          motion = {
+            hop.enable = true;
+            leap.enable = true;
+            precognition.enable = isMaximal;
+          };
 
-    utility = {
-      ccc.enable = false;
-      vim-wakatime.enable = false;
-      diffview-nvim.enable = true;
-      yanky-nvim.enable = false;
-      qmk-nvim.enable = false; # requires hardware specific options
-      icon-picker.enable = isMaximal;
-      surround.enable = isMaximal;
-      leetcode-nvim.enable = isMaximal;
-      multicursors.enable = isMaximal;
-      smart-splits.enable = isMaximal;
-      undotree.enable = isMaximal;
-      nvim-biscuits.enable = isMaximal;
-      grug-far-nvim.enable = isMaximal;
+          images = {
+            image-nvim.enable = false;
+            img-clip.enable = isMaximal;
+          };
+        };
 
-      motion = {
-        hop.enable = true;
-        leap.enable = true;
-        precognition.enable = isMaximal;
-      };
-      images = {
-        image-nvim.enable = false;
-        img-clip.enable = isMaximal;
-      };
-    };
+        notes = {
+          neorg.enable = false;
+          orgmode.enable = false;
+          todo-comments.enable = true;
+        };
 
-    notes = {
-      neorg.enable = false;
-      orgmode.enable = false;
-      todo-comments.enable = true;
-    };
+        terminal = {
+          toggleterm = {
+            enable = true;
+            lazygit.enable = true;
+          };
+        };
 
-    terminal = {
-      toggleterm = {
-        enable = true;
-        lazygit.enable = true;
-      };
-    };
+        ui = {
+          borders.enable = true;
+          noice.enable = true;
+          colorizer.enable = true;
+          modes-nvim.enable = false;
+          illuminate.enable = true;
 
-    ui = {
-      borders.enable = true;
-      noice.enable = true;
-      colorizer.enable = true;
-      modes-nvim.enable = false; # the theme looks terrible with catppuccin
-      illuminate.enable = true;
-      breadcrumbs = {
-        enable = isMaximal;
-        navbuddy.enable = isMaximal;
-      };
-      smartcolumn = {
-        enable = true;
-        setupOpts.custom_colorcolumn = {
-          # this is a freeform module, it's `buftype = int;` for configuring column position
-          nix = "110";
-          ruby = "120";
-          java = "130";
-          go = ["90" "130"];
+          breadcrumbs = {
+            enable = isMaximal;
+            navbuddy.enable = isMaximal;
+          };
+
+          smartcolumn = {
+            enable = true;
+            setupOpts.custom_colorcolumn = {
+              nix = "110";
+              ruby = "120";
+              java = "130";
+              go = ["90" "130"];
+            };
+          };
+          fastaction.enable = true;
+        };
+
+        assistant = {
+          chatgpt.enable = false;
+          copilot = {
+            enable = false;
+            cmp.enable = isMaximal;
+          };
+          codecompanion-nvim.enable = false;
+          avante-nvim.enable = isMaximal;
+        };
+
+        session = {
+          nvim-session-manager.enable = false;
+        };
+
+        gestures = {
+          gesture-nvim.enable = false;
+        };
+
+        comments = {
+          comment-nvim.enable = true;
+        };
+
+        presence = {
+          neocord.enable = false;
         };
       };
-      fastaction.enable = true;
-    };
-
-    assistant = {
-      chatgpt.enable = false;
-      copilot = {
-        enable = false;
-        cmp.enable = isMaximal;
-      };
-      codecompanion-nvim.enable = false;
-      avante-nvim.enable = isMaximal;
-    };
-
-    session = {
-      nvim-session-manager.enable = false;
-    };
-
-    gestures = {
-      gesture-nvim.enable = false;
-    };
-
-    comments = {
-      comment-nvim.enable = true;
-    };
-
-    presence = {
-      neocord.enable = false;
     };
   };
 }

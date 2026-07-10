@@ -61,7 +61,7 @@ with builtins;
     };
 
     editors = {
-	editors.nvf.enable = true;
+	nvf.enable = true;
       default = "nvf";
       #vim.enable = true;
     };
