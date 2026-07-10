@@ -45,6 +45,27 @@
         "type": "github"
       }
     },
+    "dms": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783612934,
+        "narHash": "sha256-I3NLCw8Fdo//1khxymLFRR00l14UoEulu1rJ7USeJ/M=",
+        "owner": "AvengeMedia",
+        "repo": "DankMaterialShell",
+        "rev": "cb0dc9c68dce0cc88e1ecc499dba422179dcb1e2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "DankMaterialShell",
+        "type": "github"
+      }
+    },
     "emacs-overlay": {
       "inputs": {
         "nixpkgs": [
@@ -63,6 +84,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "emacs-overlay",
+        "type": "github"
+      }
+    },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "NixOS",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "flake-compat",
         "type": "github"
       }
     },
@@ -207,6 +244,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "dms": "dms",
         "emacs-overlay": "emacs-overlay",
         "home-manager": "home-manager_2",
         "nixos-hardware": "nixos-hardware",

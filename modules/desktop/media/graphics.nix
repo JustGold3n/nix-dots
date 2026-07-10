@@ -15,11 +15,11 @@ let cfg = config.modules.desktop.media.graphics;
 in {
   options.modules.desktop.media.graphics = {
     enable         = mkBoolOpt false;
-    tools.enable   = mkBoolOpt true;
-    raster.enable  = mkBoolOpt true;
-    vector.enable  = mkBoolOpt true;
-    sprites.enable = mkBoolOpt true;
-    design.enable  = mkBoolOpt true;
+    tools.enable   = mkBoolOpt false;
+    raster.enable  = mkBoolOpt false;
+    vector.enable  = mkBoolOpt false;
+    sprites.enable = mkBoolOpt false;
+    design.enable  = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
@@ -48,7 +48,7 @@ in {
             gmic            # an assortment of extra filters
           ];
         })
-        krita   # But Krita is better for digital illustration
+        #krita   # But Krita is better for digital illustration
       ]) ++
 
       # Sprite sheets & animation

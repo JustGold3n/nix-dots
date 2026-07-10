@@ -20,14 +20,17 @@
       agenix.inputs.nixpkgs.follows = "nixpkgs";
       quickshell.url = "github:quickshell-mirror/quickshell";
       quickshell.inputs.nixpkgs.follows = "nixpkgs";
+      dms.url = "github:AvengeMedia/DankMaterialShell";
+      dms.inputs.nixpkgs.follows = "nixpkgs";
 
       # Extras (imported directly by modules/hosts that need them)
-      emacs-overlay.url = "github:nix-community/emacs-overlay";
-      emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
+#      emacs-overlay.url = "github:nix-community/emacs-overlay";
+#      emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
       nixos-hardware.url = "github:nixos/nixos-hardware";
+      nvf.url = "github:NotAShelf/nvf";
       zen-browser.url = "github:youwen5/zen-browser-flake";
     };
-    
+
   outputs = inputs @ { self, nixpkgs, nixos-hardware, ... }:
     let
       args = {

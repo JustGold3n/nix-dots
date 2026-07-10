@@ -31,10 +31,21 @@ with builtins;
     };
 
     desktop = {
-      niri.enable = true;
+      hyprland = rec {
+        enable = true;
+        monitors = [ { output = "eDP-1"; primary = true; } ];
+        extraConfig = ''
+          hl.workspace_rule({ workspace = "special:term", gaps_out = 100, on_created_empty = "hey .scratch term" })
+          hl.workspace_rule({ workspace = "special:pad", gaps_in = 3, gaps_out = { top = 40, left = 80, bottom = 40, right = 80 }})
+
+          -- trigger when the lid is up
+          -- hl.bind("switch:off:Lid Switch", hl.dsp.dpms({ action = "disable" }))
+          -- trigger when the lid is down
+          -- hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("hyprctl dispatch dpms off && hey .lock --no-fade-in --no-fade-out"))
+        '';
+      };
 
       apps.rofi.enable = true;
-      apps.quickshell.enable = true;
       term.default = "foot";
       term.foot.enable = true;
       browsers.default = "zen-browser";
@@ -50,8 +61,9 @@ with builtins;
     };
 
     editors = {
-      default = "nvim";
-      vim.enable = true;
+	editors.nvf.enable = true;
+      default = "nvf";
+      #vim.enable = true;
     };
 
     shell = {
@@ -70,8 +82,7 @@ with builtins;
       utils.enable = true;
       fs.enable = true;
     };
-
-    virt.qemu.enable = true;
+    # virt.qemu.enable = true;
   };
 
   ## Local config
