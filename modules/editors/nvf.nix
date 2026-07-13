@@ -4,9 +4,8 @@ with lib;
 with hey.lib;
 let 
   cfg = config.modules.editors.nvf;
-  isMaximal = true; # Set to false for a more minimal initial configuration
+  isMaximal = true; 
 in {
-  # Import the nvf NixOS module from the flake inputs
   imports = [
     hey.inputs.nvf.nixosModules.default
   ];
@@ -25,12 +24,12 @@ in {
           enable = false;
           level = 16;
           logFile = "/tmp/nvim.log";
-        };        # vim.opts and vim.options are aliased
+        };        
         opts.expandtab = true;
 
         spellcheck = {
           enable = true;
-          programmingWordlist.enable = isMaximal;
+          programmingWordlist.enable = false;
         };
 
         lsp = {
@@ -187,7 +186,7 @@ in {
 
         minimap = {
           minimap-vim.enable = false;
-          codewindow.enable = isMaximal;
+          codewindow.enable = false;
         };
 
         dashboard = {

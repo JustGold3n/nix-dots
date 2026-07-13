@@ -31,7 +31,7 @@ hl.config({
 
     input = {
         kb_layout = "us, cz",
-        kb_variant = ",",
+        kb_variant = ",qwerty",
         kb_model   = "",
         kb_options = "grp:alt_shift_toggle",
         kb_rules   = "",
@@ -238,6 +238,7 @@ hl.window_rule({
 hl.bind("SUPER + d",          		hl.dsp.exec_cmd("hey @rofi appmenu"))
 hl.bind("SUPER + +SHIFT + Return",      hl.dsp.exec_cmd("hey .open-term"))
 hl.bind("SUPER + Return", 		hl.dsp.exec_cmd("foot"))
+hl.bind("SUPER + t", 			hl.dsp.exec_cmd("zen"))
 hl.bind("SUPER + c",              	hl.dsp.exec_cmd("hey @rofi calcmenu"))
 hl.bind("SUPER + Space",              	hl.dsp.exec_cmd("hey .screendraw"))
 hl.bind("SUPER + Escape",         	hl.dsp.exec_cmd("dms ipc call notifications clearAll; dms ipc toast hide"))

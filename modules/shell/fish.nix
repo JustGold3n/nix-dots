@@ -1,48 +1,68 @@
-{ hey, lib, config, options, pkgs, ... }:
-
+{
+  hey,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
-with hey.lib;
-let cfg = config.modules.shell.fish;
+with hey.lib; let
+  cfg = config.modules.shell.fish;
 in {
-  options.modules.shell.fish = with types; {
+  options.modules.shell.fish = {
     enable = mkBoolOpt false;
-
- #   rcInit = mkOpt' lines "" ''
- #     Zsh lines to be written to $XDG_CONFIG_HOME/zsh/extra.zshrc and sourced by
- #     $XDG_CONFIG_HOME/zsh/.zshrc
- #   '';
- #   envInit = mkOpt' lines "" ''
- #     Zsh lines to be written to ${config.home.configDir}/zsh/extra.zshenv and
- #     sourced by $XDG_CONFIG_HOME/zsh/.zshenv
- #   '';
-
-#    rcFiles  = mkOpt (listOf (either str path)) [];
-#    envFiles = mkOpt (listOf (either str path)) [];
   };
-  config = mkIf cfg.enable {
-   programs.fish.enable = true;
 
+  config = mkIf cfg.enable {
+    # Keep Fish enabled in NixOS
+    programs.fish.enable = true;
     users.defaultUserShell = pkgs.fish;
 
-    # Some interactive shell utilies I find universally indispensible.
+    # Move Starship into the home-manager block
+    home-manager.users.${config.user.name} = {
+      programs.starship = {
+        enable = true;
+        enableFishIntegration = true; # This will now work
+        settings = {
+          add_newline = false;
+          character = {
+            success_symbol = "[❯](bold blue)";
+            error_symbol = "[❯](bold red)";
+            vimcmd_symbol = "[❮](bold green)";
+          };
+          directory = {
+            style = "bold blue";
+            truncate_to_repo = true;
+            truncation_length = 3;
+          };
+          git_branch = {
+            style = "italic blue";
+            symbol = " ";
+          };
+          git_status = {
+            style = "italic blue";
+          };
+        };
+      };
+    };
+
+    # Keep your packages here
     user.packages = with pkgs; [
       at
-      bat      # a better cat
+      bat
       bc
-      dust     # a better du
-      eza      # a better ls
+      dust
+      eza
       fasd
       fd
       fzf
       gnumake
-      libqalculate  # calculator cli w/ currency conversion
-     # nix-zsh-completions
-      ripgrep  # a better grep
-      tokei    # for code statistics
+      libqalculate
+      ripgrep
+      tokei
       unar
       zip
       unzip
-      vim
     ];
-};
+  };
 }

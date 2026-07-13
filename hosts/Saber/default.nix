@@ -5,8 +5,7 @@
   ...
 }:
 with lib;
-with builtins;
-{
+with builtins; {
   system = "x86_64-linux";
 
   imports = [
@@ -33,7 +32,12 @@ with builtins;
     desktop = {
       hyprland = rec {
         enable = true;
-        monitors = [ { output = "eDP-1"; primary = true; } ];
+        monitors = [
+          {
+            output = "eDP-1";
+            primary = true;
+          }
+        ];
         extraConfig = ''
           hl.workspace_rule({ workspace = "special:term", gaps_out = 100, on_created_empty = "hey .scratch term" })
           hl.workspace_rule({ workspace = "special:pad", gaps_in = 3, gaps_out = { top = 40, left = 80, bottom = 40, right = 80 }})
@@ -61,8 +65,8 @@ with builtins;
     };
 
     editors = {
-	nvf.enable = true;
-      default = "nvf";
+      nvf.enable = true;
+      default = "nvim";
       #vim.enable = true;
     };
 
@@ -88,6 +92,7 @@ with builtins;
   ## Local config
   config = {...}: {
     networking.networkmanager.enable = true;
+    services.upower.enable = true;
   };
 
   ## Hardware config
