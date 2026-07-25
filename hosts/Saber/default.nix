@@ -93,6 +93,8 @@ with builtins; {
   config = {...}: {
     networking.networkmanager.enable = true;
     services.upower.enable = true;
+    services.fprintd.enable = true;
+    security.pam.services.sudo.fprintAuth = true;
   };
 
   ## Hardware config

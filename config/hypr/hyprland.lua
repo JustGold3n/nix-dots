@@ -129,11 +129,11 @@ hl.layer_rule({
     ignore_alpha = 0.3
 })
 -- Since we can't focus anything with rofi up anyway, convey this visually.
-hl.layer_rule({
-    match = { namespace = "rofi" },
-    dim_around = true,
-    animation = "slide top"
-})
+--hl.layer_rule({
+--    match = { namespace = "rofi" },
+--    dim_around = true,
+--    animation = "slide top"
+--})
 
 
 -- * Workspace rules
@@ -235,11 +235,10 @@ hl.window_rule({
 
 -- * Keybinds
 
-hl.bind("SUPER + d",          		hl.dsp.exec_cmd("hey @rofi appmenu"))
+hl.bind("SUPER + d",          		hl.dsp.exec_cmd("dms ipc call spotlight toggle"))
 hl.bind("SUPER + +SHIFT + Return",      hl.dsp.exec_cmd("hey .open-term"))
 hl.bind("SUPER + Return", 		hl.dsp.exec_cmd("foot"))
 hl.bind("SUPER + t", 			hl.dsp.exec_cmd("zen"))
-hl.bind("SUPER + c",              	hl.dsp.exec_cmd("hey @rofi calcmenu"))
 hl.bind("SUPER + Space",              	hl.dsp.exec_cmd("hey .screendraw"))
 hl.bind("SUPER + Escape",         	hl.dsp.exec_cmd("dms ipc call notifications clearAll; dms ipc toast hide"))
 
@@ -254,8 +253,8 @@ hl.bind("SUPER + q", hl.dsp.submap("session"))
 hl.define_submap("session", "reset", function()
     hl.bind("SUPER + q", hl.dsp.window.close())
     hl.bind("SUPER + k", hl.dsp.window.kill())
-    hl.bind("SUPER + p", hl.dsp.exec_cmd("hey @rofi powermenu"))
-    hl.bind("SUPER + SHIFT + l", hl.dsp.exec_cmd("loginctl lock-session"))
+    hl.bind("SUPER + p", hl.dsp.exec_cmd("dms ipc call fullscreenPowerMenu toggle"))
+    hl.bind("SUPER + l", hl.dsp.exec_cmd("dms ipc call lock lock"))
     hl.bind("SUPER + d", my.dsp.dpms(false))
     hl.bind("SUPER + SUPER_L", hl.dsp.submap("reset"), { release = true })
     hl.bind("catchall", hl.dsp.submap("reset"))

@@ -1,10 +1,14 @@
-{ hey, lib, config, pkgs, ... }:
-
+{
+  hey,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
-with hey.lib;
-let 
+with hey.lib; let
   cfg = config.modules.editors.nvf;
-  isMaximal = true; 
+  isMaximal = true;
 in {
   imports = [
     hey.inputs.nvf.nixosModules.default
@@ -24,7 +28,7 @@ in {
           enable = false;
           level = 16;
           logFile = "/tmp/nvim.log";
-        };        
+        };
         opts.expandtab = true;
 
         spellcheck = {
@@ -148,7 +152,7 @@ in {
           enable = true;
           name = "catppuccin";
           style = "mocha";
-          transparent = false;
+          transparent = true;
         };
 
         autopairs.nvim-autopairs.enable = true;
@@ -290,6 +294,10 @@ in {
 
         presence = {
           neocord.enable = false;
+        };
+        clipboard = {
+          enable = true;
+          registers = "unnamedplus";
         };
       };
     };

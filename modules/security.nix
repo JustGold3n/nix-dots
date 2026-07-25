@@ -1,6 +1,8 @@
-{ lib, config, ... }:
-
 {
+  lib,
+  config,
+  ...
+}: {
   ## System security tweaks
   # tmpfs = /tmp is mounted in ram. Doing so makes temp file management speedy
   # on ssd systems and more secure (and volatile!) because it's wiped on reboot.
@@ -53,11 +55,11 @@
     "net.ipv4.tcp_congestion_control" = "bbr";
     "net.core.default_qdisc" = "cake";
   };
-  boot.kernelModules = [ "tcp_bbr" ];
+  boot.kernelModules = ["tcp_bbr"];
 
   # Change me later!
-#  user.initialPassword = "nixos";
-#  users.users.root.initialPassword = "nixos";
+  #  user.initialPassword = "nixos";
+  #  users.users.root.initialPassword = "nixos";
 
   # Harden SSH client
   programs.ssh = {
@@ -71,4 +73,5 @@
 
   # So we don't have to do this later...
   security.acme.acceptTerms = true;
+  services.gnome.gnome-keyring.enable = lib.mkForce false;
 }

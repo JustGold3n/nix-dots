@@ -1,4 +1,3 @@
-{
   hey,
   lib,
   config,
