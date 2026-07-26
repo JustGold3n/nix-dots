@@ -1,7 +1,8 @@
-  hey,
-  lib,
+{
   config,
+  lib,
   pkgs,
+  hey,
   ...
 }:
 with lib;
