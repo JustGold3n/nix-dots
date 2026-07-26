@@ -19,7 +19,7 @@ in {
     users.defaultUserShell = pkgs.fish;
 
     # Move Starship into the home-manager block
-    home-manager.users.${config.user.name} = {
+    home-manager.users.gold3n = {
       programs.starship = {
         enable = true;
         enableFishIntegration = true; # This will now work

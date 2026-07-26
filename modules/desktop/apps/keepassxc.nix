@@ -16,15 +16,6 @@
   services.gnome.gnome-keyring.enable = lib.mkForce false;
   security.pam.services.login.enableGnomeKeyring = lib.mkForce false;
 
-  # Agenix Secret Provisioning
-  age.secrets.keepass_database = {
-    # Adjust this path to point to where you store your agenix secrets
-    file = ../../../config/secrets/keepass_db.age;
-    path = "${config.users.users.gold3n.home}/.local/share/keepassxc/database.kdbx";
-    owner = "gold3n";
-    mode = "0400";
-  };
-
   # ==========================================
   # Home Manager User-Level Configuration
   # ==========================================
