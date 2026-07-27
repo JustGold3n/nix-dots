@@ -9,8 +9,6 @@ with builtins; {
   system = "x86_64-linux";
 
   imports = [
-    inputs.agenix.nixosModules.default
-    ../../modules/agenix.nix
     ./hardware-configuration.nix
   ];
 
@@ -69,7 +67,7 @@ with builtins; {
     editors = {
       nvf.enable = true;
       default = "nvim";
-      environment.variables.EDITOR = "nvim";
+      #  environment.variables.EDITOR = "nvim";
       #vim.enable = true;
     };
 
