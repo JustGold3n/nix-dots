@@ -16,13 +16,12 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      # Forcefully disable the default SSH agent to allow GCR SSH Agent to handle it
-      programs.ssh.startAgent = lib.mkForce true;
-
       services.openssh = {
         enable = true;
         settings = {
           KbdInteractiveAuthentication = false;
+          # Require keys over passwords. Ensure target machines are provisioned
+          # with authorizedKeys!
           PasswordAuthentication = false;
         };
         # Suppress superfluous TCP traffic on new connections. Undo if using SSSD.
@@ -31,20 +30,18 @@ in {
         moduliFile = pkgs.runCommand "filterModuliFile" {} ''
           awk '$5 >= 3071' "${config.programs.ssh.package}/etc/ssh/moduli" >"$out"
         '';
-        matchBlocks = {
-          "github.com" = {
-            identityFile = "~/.ssh/id_github";
-            identitiesOnly = true;
-          };
-          "work.internal" = {
-            hostname = "work.internal";
-            identityFile = "~/.ssh/id_work_yubikey";
-            identitiesOnly = true;
-          };
-          "*" = {
-            identityFile = "~/.ssh/id_personal";
-          };
-        };
+        # Removes the default RSA key (not that it represents a vulnerability, per
+        # se, but is one less key (that I don't plan to use) to the castle laying
+        # around) and improves the ed25519 key's entropy by generating it with 100
+        # rounds (default is 16).
+        hostKeys = [
+          {
+            comment = "${config.networking.hostName}.local";
+            path = "/etc/ssh/ssh_host_ed25519_key";
+            rounds = 100;
+            type = "ed25519";
+          }
+        ];
       };
     }
 
