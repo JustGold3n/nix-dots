@@ -9,7 +9,7 @@
 with builtins;
 with lib;
 with hey.lib; let
-  hostKey = "/etc/ssh/host_ed25519";
+  hostKey = "/etc/ssh/ssh_host_ed25519_key";
 in {
   imports = [hey.modules.agenix.age];
 
