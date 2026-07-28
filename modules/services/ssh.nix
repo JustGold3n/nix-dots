@@ -27,9 +27,9 @@ in {
         # Suppress superfluous TCP traffic on new connections. Undo if using SSSD.
         extraConfig = ''GSSAPIAuthentication no'';
         # Deactivate short moduli
-        moduliFile = pkgs.runCommand "filterModuliFile" {} ''
-          awk '$5 >= 3071' "${config.programs.ssh.package}/etc/ssh/moduli" >"$out"
-        '';
+        #   moduliFile = "${pkgs.runCommand "filterModuliFile" {} ''
+        #awk '$5 >= 3071' ${pkgs.openssh}/etc/ssh/moduli > $out
+        #''}";
         # Removes the default RSA key (not that it represents a vulnerability, per
         # se, but is one less key (that I don't plan to use) to the castle laying
         # around) and improves the ed25519 key's entropy by generating it with 100
@@ -43,6 +43,9 @@ in {
           }
         ];
       };
+      environment.etc."ssh/moduli".source = pkgs.runCommand "filterModuliFile" {} ''
+        awk '$5 >= 3071' ${pkgs.openssh}/etc/ssh/moduli > $out
+      '';
     }
 
     (mkIf config.modules.xdg.ssh.enable {

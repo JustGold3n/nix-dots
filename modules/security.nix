@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: {
   ## System security tweaks
@@ -70,6 +71,17 @@
         UseRoaming no
     '';
   };
+  services.pcscd.enable = true;
+
+  # Enable udev rules for YubiKey
+  services.udev.packages = with pkgs; [yubikey-personalization];
+
+  environment.systemPackages = with pkgs; [
+    yubikey-manager # CLI tool (ykman)
+    yubikey-personalization # Core personalization tool
+    yubico-piv-tool # PIV applet tool
+    pam_u2f # PAM module for U2F/FIDO2
+  ];
 
   # So we don't have to do this later...
   security.acme.acceptTerms = true;
