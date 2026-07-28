@@ -50,6 +50,7 @@ with builtins; {
       };
 
       apps.rofi.enable = true;
+      apps.vesktop.enable = true;
       term.default = "foot";
       term.foot.enable = true;
       browsers.default = "zen-browser";
