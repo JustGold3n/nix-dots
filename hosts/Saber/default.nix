@@ -81,7 +81,8 @@ with builtins; {
     };
 
     services = {
-      ssh.enable = true;
+      #ssh.enable = true;
+      gpg.enable = true;
     };
 
     system = {

@@ -2,67 +2,74 @@
   config,
   lib,
   pkgs,
-  hey,
   ...
-}:
-with lib;
-with hey.lib; let
+}: let
   cfg = config.modules.shell.fish;
 in {
   options.modules.shell.fish = {
-    enable = mkBoolOpt false;
+    enable = lib.mkEnableOption "fish shell configuration";
   };
 
-  config = mkIf cfg.enable {
-    # Keep Fish enabled in NixOS
-    programs.fish.enable = true;
-    users.defaultUserShell = pkgs.fish;
+  config = lib.mkIf cfg.enable {
+    # Provision the required binaries system-wide
+    environment.systemPackages = with pkgs; [
+      eza
+      zoxide
+    ];
 
-    # Move Starship into the home-manager block
-    home-manager.users.gold3n = {
-      programs.starship = {
-        enable = true;
-        enableFishIntegration = true; # This will now work
-        settings = {
-          add_newline = false;
-          character = {
-            success_symbol = "[❯](bold blue)";
-            error_symbol = "[❯](bold red)";
-            vimcmd_symbol = "[❮](bold green)";
-          };
-          directory = {
-            style = "bold blue";
-            truncate_to_repo = true;
-            truncation_length = 3;
-          };
-          git_branch = {
-            style = "italic blue";
-            symbol = " ";
-          };
-          git_status = {
-            style = "italic blue";
-          };
+    programs.fish = {
+      enable = true;
+
+      # Replace ls with eza using NixOS-native fish aliases
+      shellAliases = {
+        ls = "eza --icons=always";
+        la = "eza -a --icons=always";
+        ll = "eza -l --icons=always";
+        lla = "eza -la --icons=always";
+        tree = "eza --tree --icons=always";
+      };
+
+      interactiveShellInit = ''
+        set -U fish_greeting ""
+
+        # Enable vim bindings
+        #set -g fish_key_bindings fish_vi_key_bindings
+
+        # Define cursor shapes for visual feedback in vi modes
+        set -g fish_cursor_default block
+        set -g fish_cursor_insert line
+        set -g fish_cursor_replace_one underscore
+        set -g fish_cursor_visual block
+
+        # Initialize zoxide and natively override the cd command
+        zoxide init fish --cmd cd | source
+      '';
+    };
+
+    # Starship is supported at the NixOS system level for the prompt
+    programs.starship = {
+      enable = true;
+      settings = {
+        add_newline = false;
+
+        character = {
+          success_symbol = "[❯](bold blue)";
+          error_symbol = "[❯](bold red)";
+          vimcmd_symbol = "[❮](bold green)";
+          vimcmd_replace_one_symbol = "[❮](bold purple)";
+          vimcmd_replace_symbol = "[❮](bold purple)";
+          vimcmd_visual_symbol = "[❮](bold yellow)";
+        };
+
+        directory = {
+          style = "bold cyan";
+        };
+
+        git_branch = {
+          format = "on [$symbol$branch]($style) ";
+          style = "bold magenta";
         };
       };
     };
-
-    # Keep your packages here
-    user.packages = with pkgs; [
-      at
-      bat
-      bc
-      dust
-      eza
-      fasd
-      fd
-      fzf
-      gnumake
-      libqalculate
-      ripgrep
-      tokei
-      unar
-      zip
-      unzip
-    ];
   };
 }
