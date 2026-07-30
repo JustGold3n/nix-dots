@@ -20,11 +20,10 @@ in {
     programs.fish = {
       enable = true;
 
-      # Replace ls with eza using NixOS-native fish aliases
+      # Direct binary resolution prevents default coreutils from taking precedence
       shellAliases = {
         ls = "eza --icons=always";
         la = "eza -a --icons=always";
-        ll = "eza -l --icons=always";
         lla = "eza -la --icons=always";
         tree = "eza --tree --icons=always";
       };
@@ -32,17 +31,36 @@ in {
       interactiveShellInit = ''
         set -U fish_greeting ""
 
-        # Enable vim bindings
-        #set -g fish_key_bindings fish_vi_key_bindings
+        # Enforce native Fish syntax highlighting colors
+        set -g fish_color_command green --bold
+        set -g fish_color_param cyan
+        set -g fish_color_error red --bold
+        set -g fish_color_quote yellow
+        set -g fish_color_redirection magenta
+        set -g fish_color_end blue
+        set -g fish_color_comment black
+
+        # Initialize zoxide and natively override the cd command
+        zoxide init fish --cmd cd | source
+
+        # Fish requires keybindings to be encapsulated in this function to persist
+        function fish_user_key_bindings
+            # Enable vim bindings natively
+            fish_vi_key_bindings
+
+            # Bind Ctrl+Backspace to remove the previous word
+            # Supports standard escape sequences (\cH for Ctrl-H/Backspace, \e\x7f for Alt-Backspace)
+            bind -M insert \cH backward-kill-word
+            bind -M default \cH backward-kill-word
+            bind -M insert \e\x7f backward-kill-word
+            bind -M default \e\x7f backward-kill-word
+        end
 
         # Define cursor shapes for visual feedback in vi modes
         set -g fish_cursor_default block
         set -g fish_cursor_insert line
         set -g fish_cursor_replace_one underscore
         set -g fish_cursor_visual block
-
-        # Initialize zoxide and natively override the cd command
-        zoxide init fish --cmd cd | source
       '';
     };
 

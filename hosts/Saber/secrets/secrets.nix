@@ -15,7 +15,7 @@ let
 in {
   # Define the secrets and assign authorized decryption keys
   "keepassxc-password.age".publicKeys = allKeys;
-  "ssh-personal.age".publicKeys = allKeys;
-  "ssh-github.age".publicKeys = allKeys;
+  "id-personal.age".publicKeys = allKeys;
+  "id-github.age".publicKeys = allKeys;
   #  "secrets/ssh-work.age".publicKeys = allKeys;
 }
